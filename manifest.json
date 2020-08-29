@@ -1,0 +1,12 @@
+{
+    "manifest_version": 2,
+    "name": "PAUSD Zoom Class Tracker",
+    "description": "This extension will track the PAUSD schedule and keep track of zoom links.",
+    "version": "1.0",
+    "browser_action": {
+        "default_popup": "popup.html"
+    },
+    "permissions": [
+        "storage"
+    ]
+}
