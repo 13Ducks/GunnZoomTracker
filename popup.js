@@ -15,12 +15,9 @@ $(function () {
         }
     });
 
-
     $("#tabs").tabs();
 
     $(".pbutton").on("click", function (event) {
-        saveInputs();
-
         const targetID = event.target.id;
         const linkID = "#" + targetID.substring(0, targetID.indexOf("button"));
         let link = $(linkID).val();
@@ -32,20 +29,15 @@ $(function () {
         });
     });
 
-    $("#savebutton").on("click", function () {
-        saveInputs();
+    $('.pinput').each(function () {
+        $(this).blur(function () {
+            browser.storage.sync.set({ [this.id]: $("#" + this.id).val() });
+        });
+    })
+
+    $("#fullschedule").on("click", function () {
+        browser.tabs.create({
+            url: "https://gunn.pausd.org/campus-life/bell-schedule"
+        });
     });
 });
-
-function saveInputs() {
-    const inputFields = $(".pinput");
-
-    let linkSave = {};
-    for (const i of inputFields) {
-        linkSave[i.id] = $("#" + i.id).val();
-    }
-
-    browser.storage.sync.set(linkSave, function () {
-        $("#savemessage").text("Saved!")
-    });
-}
