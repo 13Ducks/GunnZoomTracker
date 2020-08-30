@@ -7,6 +7,7 @@
     <link rel="stylesheet" href="popup.css">
     <script src="jquery/jquery-3.5.1.min.js"></script>
     <script src="jquery/jquery-ui.min.js"></script>
+    <script src="schedule.js"></script>
     <script src="popup.js"></script>
 </head>
 
@@ -18,7 +19,13 @@
             <li><a href="#tabs-3">Full Schedule</a></li>
         </ul>
         <div id="tabs-1">
-            <p>Proin elit arcu, </p>
+            <p>NOTE: Does not account for alternate schedules. Check <u id="ugwalink">UGWA</u> for that.</p>
+            <h2 id="currenttext">Current</h2>
+            <div id="currentdiv"></div>
+            <h2 id="upcomingtext">Upcoming</h2>
+            <div id="upcomingdiv"></div>
+            <h2 id="passedtext">Passed</h2>
+            <div id="passeddiv"></div>
         </div>
         <div id="tabs-2">
             <label for="p1">1:</label>
@@ -48,6 +55,10 @@
             <label for="p7">7:</label>
             <input type="text" id="p7" class="pinput">
             <button id="p7button" class="pbutton">Open</button><br><br>
+
+            <label for="pSELF">SELF:</label>
+            <input type="text" id="pSELF" class="pinput">
+            <button id="pSELFbutton" class="pbutton">Open</button><br><br>
         </div>
         <div id="tabs-3">
             <img src="GunnBellSchedule.png" width="500" id="fullschedule">
