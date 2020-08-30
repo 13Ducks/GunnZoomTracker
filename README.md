@@ -12,7 +12,7 @@ Chrome
 - click load unpacked
 - select the project directory
 
-Firefox
+Firefox (extension may disappear when firefox is closed, but all links will still be saved, and when opened again, will still be stored)
 - go to about:debugging
 - click on "This Firefox"
 - click load temporary addon
