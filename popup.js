@@ -30,12 +30,10 @@ $(function () {
         const normalSchedule = generateSchedule(now);
         const d = new Date();
 
-
         const day = d.getDay();
-        const r = Math.floor(Math.random() * 6) + 9;
 
-        $("#timetext").text("Time: " + formatHM(r, d.getMinutes()));
-        const totalMinutes = r * 60 + d.getMinutes();
+        $("#timetext").text("Time: " + formatHM(d.getHours(), d.getMinutes()));
+        const totalMinutes = d.getHours() * 60 + d.getMinutes();
 
         const daySchedule = normalSchedule[day];
 
