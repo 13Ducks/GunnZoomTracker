@@ -16,8 +16,13 @@ $(function () {
             class: "periodtext", text: period['name'] +
                 (period.gunnTogether ? " (Gunn Together)" : "") + (actualClass ? ":" : "")
         }))
-        if (!actualClass) return;
-        periodDiv.append($('<button>', { id: "p" + period['name'] + "buttonschedule", class: "schedulebutton", text: "Open" }))
+        if (actualClass)
+            periodDiv.append($('<button>', { id: "p" + period['name'] + "buttonschedule", class: "schedulebutton", text: "Open" }))
+
+        const startStr = formatHM(period['start']['hour'], period['start']['minute']);
+        const endStr = formatHM(period['end']['hour'], period['end']['minute']);
+
+        periodDiv.append($('<p>', { class: "periodtimetext", text: startStr + " - " + endStr }));
     };
 
     generateClassList = function () {
@@ -25,8 +30,11 @@ $(function () {
         const normalSchedule = generateSchedule(now);
         const d = new Date();
 
-        const day = 3//d.getDay();
+
+        const day = d.getDay();
         const r = Math.floor(Math.random() * 6) + 9;
+
+        $("#timetext").text("Time: " + formatHM(r, d.getMinutes()));
         const totalMinutes = r * 60 + d.getMinutes();
 
         const daySchedule = normalSchedule[day];
@@ -51,7 +59,8 @@ $(function () {
                 }
             }
 
-            $(".periodtext").css({ "display": "inline-block", "margin": "5px", "padding": "0px", "margin-right": "40px" });
+            $(".periodtext").css({ "display": "inline-block", "margin": "0px", "padding": "0px", "margin-right": "40px" });
+            $(".periodtimetext").css({ "margin": "0px", "padding": "0px", "margin-bottom": "20px", "margin-top": "5px" });
             $(".schedulebutton").css({ "cursor": "pointer" });
         } else {
             $("#currenttext").text("No");
@@ -101,3 +110,16 @@ $(function () {
         });
     });
 });
+
+function formatHM(h, m) {
+    const period = h >= 12 ? 'PM' : 'AM';
+    const hours = ((h + 11) % 12 + 1).toString();
+    const minutes = zfill(m, 2);
+    return hours + ":" + minutes + " " + period;
+}
+
+function zfill(number, size) {
+    number = number.toString();
+    while (number.length < size) number = "0" + number;
+    return number;
+}
