@@ -5,22 +5,9 @@ window.browser = (function () {
 })();
 
 $(function () {
-    const allFields = $(".pinput").map(function () {
+    var allFields = $(".pinput").map(function () {
         return this.id;
     }).get();
-
-    const now = Date.now();
-    const normalSchedule = generateSchedule(now);
-    const d = new Date();
-
-    const day = d.getDay();
-    const totalMinutes = d.getHours() * 60 + d.getMinutes();
-
-    const daySchedule = normalSchedule[day];
-
-    const upcomingDiv = $('#upcomingdiv');
-    const currentDiv = $('#currentdiv')
-    const passedDiv = $('#passeddiv');
 
     const createItem = function (div, period) {
         const actualClass = allFields.includes("p" + period['name']);
@@ -33,26 +20,48 @@ $(function () {
         periodDiv.append($('<button>', { id: "p" + period['name'] + "buttonschedule", class: "schedulebutton", text: "Open" }))
     };
 
-    if (daySchedule) {
+    generateClassList = function () {
+        const now = Date.now();
+        const normalSchedule = generateSchedule(now);
+        const d = new Date();
 
-        for (const key of Object.keys(daySchedule)) {
-            const period = daySchedule[key];
-            if (totalMinutes < period['start']['totalminutes']) {
-                createItem(upcomingDiv, period);
-            } else if (totalMinutes >= period['start']['totalminutes'] && totalMinutes < period['end']['totalminutes']) {
-                createItem(currentDiv, period);
-            } else if (totalMinutes >= period['end']['totalminutes']) {
-                createItem(passedDiv, period);
+        const day = 3//d.getDay();
+        const r = Math.floor(Math.random() * 6) + 9;
+        const totalMinutes = r * 60 + d.getMinutes();
+
+        const daySchedule = normalSchedule[day];
+
+        const upcomingDiv = $('#upcomingdiv');
+        const currentDiv = $('#currentdiv')
+        const passedDiv = $('#passeddiv');
+
+        upcomingDiv.empty();
+        currentDiv.empty();
+        passedDiv.empty();
+
+        if (daySchedule) {
+            for (const key of Object.keys(daySchedule)) {
+                const period = daySchedule[key];
+                if (totalMinutes < period['start']['totalminutes']) {
+                    createItem(upcomingDiv, period);
+                } else if (totalMinutes >= period['start']['totalminutes'] && totalMinutes < period['end']['totalminutes']) {
+                    createItem(currentDiv, period);
+                } else if (totalMinutes >= period['end']['totalminutes']) {
+                    createItem(passedDiv, period);
+                }
             }
-        }
 
-        $(".periodtext").css({ "display": "inline-block", "margin": "5px", "padding": "0px", "margin-right": "40px" });
-        $(".schedulebutton").css({ "cursor": "pointer" });
-    } else {
-        $("#currenttext").text("No");
-        $("#upcomingtext").text("Class");
-        $("#passedtext").text("Today!");
+            $(".periodtext").css({ "display": "inline-block", "margin": "5px", "padding": "0px", "margin-right": "40px" });
+            $(".schedulebutton").css({ "cursor": "pointer" });
+        } else {
+            $("#currenttext").text("No");
+            $("#upcomingtext").text("Class");
+            $("#passedtext").text("Today!");
+        }
     }
+
+    generateClassList();
+    setInterval(generateClassList, 1000 * 60);
 
     browser.storage.sync.get(allFields, function (items) {
         for (const key of Object.keys(items)) {
