@@ -11,18 +11,27 @@ $(function () {
 
     const createItem = function (div, period) {
         const actualClass = allFields.includes("p" + period['name']);
-        periodDiv = div.append($('<div>', { id: div.id + period['name'] }))
-        periodDiv.append($('<p>', {
-            class: "periodtext", text: period['name'] +
+
+        periodDiv = $("<div>", { id: div.id + period['name'] });
+        div.append(periodDiv);
+
+        periodDivTop = $("<div>", { id: div.id + period['name'] + "top" });
+        periodDiv.append(periodDivTop);
+
+        periodDivTop.css({ "display": "flex" });
+        periodDivTop.append($("<p>", {
+            class: "periodtext", text: period["name"] +
                 (period.gunnTogether ? " (Gunn Together)" : "") + (actualClass ? ":" : "")
         }))
         if (actualClass)
-            periodDiv.append($('<button>', { id: "p" + period['name'] + "buttonschedule", class: "schedulebutton", text: "Open" }))
+            periodDivTop.append($('<button>', { id: "p" + period['name'] + "buttonschedule", class: "schedulebutton", text: "Open" }))
 
         const startStr = formatHM(period['start']['hour'], period['start']['minute']);
         const endStr = formatHM(period['end']['hour'], period['end']['minute']);
 
-        periodDiv.append($('<p>', { class: "periodtimetext", text: startStr + " - " + endStr }));
+        periodDivBottom = $("<div>", { id: div.id + period['name'] + "bottom" });
+        periodDiv.append(periodDivBottom);
+        periodDivBottom.append($('<p>', { class: "periodtimetext", text: startStr + " - " + endStr }));
     };
 
     generateClassList = function () {
@@ -57,7 +66,7 @@ $(function () {
                 }
             }
 
-            $(".periodtext").css({ "display": "inline-block", "margin": "0px", "padding": "0px", "margin-right": "40px" });
+            $(".periodtext").css({ "flex": "auto", "margin": "0px", "padding": "0px" });
             $(".periodtimetext").css({ "margin": "0px", "padding": "0px", "margin-bottom": "20px", "margin-top": "5px" });
             $(".schedulebutton").css({ "cursor": "pointer" });
         } else {
