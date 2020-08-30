@@ -5,3 +5,7 @@ body {
 #fullschedule, #ugwalink, .pbutton {
     cursor: pointer;
 }
+
+#tabs a:focus {
+    outline: none;
+}
