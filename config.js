@@ -1,3 +1,4 @@
 const config = {
-    apiKey: 'apikeygoeshere'
+    // commented out so it knows it is undefined.
+    // apiKey: 'apikeygoeshere'
 }
