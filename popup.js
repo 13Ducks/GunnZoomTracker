@@ -4,37 +4,61 @@ window.browser = (function () {
         window.chrome;
 })();
 
-$(function () {
-    var allFields = $(".pinput").map(function () {
+$(async function () {
+    let allFields = $(".pinput").map(function () {
         return this.id;
     }).get();
 
-    const createItem = function (div, period) {
-        const actualClass = allFields.includes("p" + period['name']);
+    $("#tabs").tabs();
 
-        periodDiv = $("<div>", { id: div.id + period['name'] });
-        div.append(periodDiv);
+    let daySchedule;
 
-        periodDivTop = $("<div>", { id: div.id + period['name'] + "top" });
-        periodDiv.append(periodDivTop);
+    try {
+        if (!config['apiKey']) throw "No API key!";
 
-        periodDivTop.css({ "display": "flex" });
-        periodDivTop.append($("<p>", {
-            class: "periodtext", text: period["name"] +
-                (period.gunnTogether ? " (Gunn Together)" : "") + (actualClass ? ":" : "")
-        }))
-        if (actualClass)
-            periodDivTop.append($('<button>', { id: "p" + period['name'] + "buttonschedule", class: "schedulebutton", text: "Open" }))
+        const d = new Date();
+        const dt = d.toISOString().split("T")[0];
+        const schedule = new GunnSchedule(config['apiKey']);
+        const year = schedule.year('2020-08-17', '2021-06-03', {
+            normalSchedule: GunnSchedule.schedule2021,
+            calendarId: 'fg978mo762lqm6get2ubiab0mk0f6m2c@import.calendar.google.com',
+            defaultSelf: 0b1111
+        })
+        await year.update()
 
-        const startStr = formatHM(period['start']['hour'], period['start']['minute']);
-        const endStr = formatHM(period['end']['hour'], period['end']['minute']);
+        periods = year.get(dt).periods
 
-        periodDivBottom = $("<div>", { id: div.id + period['name'] + "bottom" });
-        periodDiv.append(periodDivBottom);
-        periodDivBottom.append($('<p>', { class: "periodtimetext", text: startStr + " - " + endStr }));
-    };
+        newPeriodNames = {
+            'A': '1',
+            'B': '2',
+            'C': '3',
+            'D': '4',
+            'E': '5',
+            'F': '6',
+            'G': '7',
+            'l': 'Lunch',
+            's': 'SELF',
+            'f': 'FLEX'
+        }
 
-    generateClassList = function () {
+
+        for (let i = 0; i < periods.length; i++) {
+            let curr = periods[i];
+            if (curr['period'] == 'g') {
+                curr['period'] = getGunnTogetherPeriod(Date.now());
+                curr['gunnTogether'] = true
+            } else {
+                if (!Object.keys(newPeriodNames).includes(curr['period'])) {
+                    periods.splice(i, 1);
+                    i--;
+                } else {
+                    curr['period'] = newPeriodNames[curr['period']]
+                }
+            }
+        }
+
+        daySchedule = periods;
+    } catch (e) {
         const now = Date.now();
         const normalSchedule = generateSchedule(now);
         const d = new Date();
@@ -42,9 +66,40 @@ $(function () {
         const day = d.getDay();
 
         $("#timetext").text("Time: " + formatHM(d.getHours(), d.getMinutes()));
-        const totalMinutes = d.getHours() * 60 + d.getMinutes();
 
-        const daySchedule = normalSchedule[day];
+        daySchedule = normalSchedule[day];
+    }
+
+
+    const createItem = function (div, period) {
+        const actualClass = allFields.includes("p" + period['period']);
+
+        periodDiv = $("<div>", { id: div.id + period['period'] });
+        div.append(periodDiv);
+
+        periodDivTop = $("<div>", { id: div.id + period['period'] + "top" });
+        periodDiv.append(periodDivTop);
+
+        periodDivTop.css({ "display": "flex" });
+        periodDivTop.append($("<p>", {
+            class: "periodtext", text: period["period"] +
+                (period.gunnTogether ? " (Gunn Together)" : "") + (actualClass ? ":" : "")
+        }))
+        if (actualClass)
+            periodDivTop.append($('<button>', { id: "p" + period['period'] + "buttonschedule", class: "schedulebutton", text: "Open" }))
+
+        const startStr = formatHM(period['start']['hour'], period['start']['minute']);
+        const endStr = formatHM(period['end']['hour'], period['end']['minute']);
+
+        periodDivBottom = $("<div>", { id: div.id + period['period'] + "bottom" });
+        periodDiv.append(periodDivBottom);
+        periodDivBottom.append($('<p>', { class: "periodtimetext", text: startStr + " - " + endStr }));
+    };
+
+    generateClassList = function () {
+        const d = new Date();
+        $("#timetext").text("Time: " + formatHM(d.getHours(), d.getMinutes()));
+        const totalMinutes = d.getHours() * 60 + d.getMinutes();
 
         const upcomingDiv = $('#upcomingdiv');
         const currentDiv = $('#currentdiv')
@@ -57,11 +112,11 @@ $(function () {
         if (daySchedule) {
             for (const key of Object.keys(daySchedule)) {
                 const period = daySchedule[key];
-                if (totalMinutes < period['start']['totalminutes']) {
+                if (totalMinutes < period['start']['totalMinutes']) {
                     createItem(upcomingDiv, period);
-                } else if (totalMinutes >= period['start']['totalminutes'] && totalMinutes < period['end']['totalminutes']) {
+                } else if (totalMinutes >= period['start']['totalMinutes'] && totalMinutes < period['end']['totalMinutes']) {
                     createItem(currentDiv, period);
-                } else if (totalMinutes >= period['end']['totalminutes']) {
+                } else if (totalMinutes >= period['end']['totalMinutes']) {
                     createItem(passedDiv, period);
                 }
             }
@@ -77,15 +132,13 @@ $(function () {
     }
 
     generateClassList();
-    setInterval(generateClassList, 1000 * 60);
+    setInterval(generateClassList, 1000 * 30);
 
     browser.storage.sync.get(allFields, function (items) {
         for (const key of Object.keys(items)) {
             $("#" + key).val(items[key]);
         }
     });
-
-    $("#tabs").tabs();
 
     $(".pbutton, .schedulebutton").on("click", function (event) {
         const targetID = event.target.id;

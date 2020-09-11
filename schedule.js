@@ -7,48 +7,48 @@ function generateSchedule(d) {
     return [
         null,
         [
-            { name: '1', start: makeHMTM(10, 0), end: makeHMTM(10, 30) },
-            { name: '2', start: makeHMTM(10, 40), end: makeHMTM(11, 10) },
-            { name: '3', start: makeHMTM(11, 20), end: makeHMTM(11, 50) },
-            { name: '4', start: makeHMTM(12, 0), end: makeHMTM(12, 35) },
-            { name: 'Lunch', start: makeHMTM(12, 35), end: makeHMTM(13, 5) },
-            { name: '5', start: makeHMTM(13, 15), end: makeHMTM(13, 45) },
-            { name: '6', start: makeHMTM(13, 55), end: makeHMTM(14, 25) },
-            { name: '7', start: makeHMTM(14, 35), end: makeHMTM(15, 5) }
+            { period: '1', start: makeHMTM(10, 0), end: makeHMTM(10, 30) },
+            { period: '2', start: makeHMTM(10, 40), end: makeHMTM(11, 10) },
+            { period: '3', start: makeHMTM(11, 20), end: makeHMTM(11, 50) },
+            { period: '4', start: makeHMTM(12, 0), end: makeHMTM(12, 35) },
+            { period: 'Lunch', start: makeHMTM(12, 35), end: makeHMTM(13, 5) },
+            { period: '5', start: makeHMTM(13, 15), end: makeHMTM(13, 45) },
+            { period: '6', start: makeHMTM(13, 55), end: makeHMTM(14, 25) },
+            { period: '7', start: makeHMTM(14, 35), end: makeHMTM(15, 5) }
         ],
         [
-            { name: '1', start: makeHMTM(9, 0), end: makeHMTM(10, 15) },
-            { name: '2', start: makeHMTM(10, 25), end: makeHMTM(11, 40) },
-            { name: 'Lunch', start: makeHMTM(11, 40), end: makeHMTM(12, 10) },
-            { name: '3', start: makeHMTM(12, 20), end: makeHMTM(13, 40) },
-            { name: '4', start: makeHMTM(13, 50), end: makeHMTM(15, 5) },
-            { name: 'Flex', start: makeHMTM(15, 10), end: makeHMTM(15, 40) }
+            { period: '1', start: makeHMTM(9, 0), end: makeHMTM(10, 15) },
+            { period: '2', start: makeHMTM(10, 25), end: makeHMTM(11, 40) },
+            { period: 'Lunch', start: makeHMTM(11, 40), end: makeHMTM(12, 10) },
+            { period: '3', start: makeHMTM(12, 20), end: makeHMTM(13, 40) },
+            { period: '4', start: makeHMTM(13, 50), end: makeHMTM(15, 5) },
+            { period: 'Flex', start: makeHMTM(15, 10), end: makeHMTM(15, 40) }
         ],
         [
-            { name: '5', start: makeHMTM(9, 40), end: makeHMTM(10, 55) },
+            { period: '5', start: makeHMTM(9, 40), end: makeHMTM(10, 55) },
             {
-                name: getGunnTogetherPeriod(d), start: makeHMTM(11, 5),
+                period: getGunnTogetherPeriod(d), start: makeHMTM(11, 5),
                 end: makeHMTM(11, 40), gunnTogether: true
             },
-            { name: 'Lunch', start: makeHMTM(11, 40), end: makeHMTM(12, 10) },
-            { name: '6', start: makeHMTM(12, 20), end: makeHMTM(13, 40) },
-            { name: '7', start: makeHMTM(13, 50), end: makeHMTM(15, 5) },
-            { name: 'Flex', start: makeHMTM(15, 10), end: makeHMTM(15, 40) }
+            { period: 'Lunch', start: makeHMTM(11, 40), end: makeHMTM(12, 10) },
+            { period: '6', start: makeHMTM(12, 20), end: makeHMTM(13, 40) },
+            { period: '7', start: makeHMTM(13, 50), end: makeHMTM(15, 5) },
+            { period: 'Flex', start: makeHMTM(15, 10), end: makeHMTM(15, 40) }
         ],
         [
-            { name: '1', start: makeHMTM(9, 0), end: makeHMTM(10, 15) },
-            { name: '2', start: makeHMTM(10, 25), end: makeHMTM(11, 40) },
-            { name: 'Lunch', start: makeHMTM(11, 40), end: makeHMTM(12, 10) },
-            { name: '3', start: makeHMTM(12, 20), end: makeHMTM(13, 40) },
-            { name: '4', start: makeHMTM(13, 50), end: makeHMTM(15, 5) },
-            { name: 'Flex', start: makeHMTM(15, 10), end: makeHMTM(15, 40) }
+            { period: '1', start: makeHMTM(9, 0), end: makeHMTM(10, 15) },
+            { period: '2', start: makeHMTM(10, 25), end: makeHMTM(11, 40) },
+            { period: 'Lunch', start: makeHMTM(11, 40), end: makeHMTM(12, 10) },
+            { period: '3', start: makeHMTM(12, 20), end: makeHMTM(13, 40) },
+            { period: '4', start: makeHMTM(13, 50), end: makeHMTM(15, 5) },
+            { period: 'Flex', start: makeHMTM(15, 10), end: makeHMTM(15, 40) }
         ],
         [
-            { name: '5', start: makeHMTM(9, 40), end: makeHMTM(10, 55) },
-            { name: 'SELF', start: makeHMTM(11, 5), end: makeHMTM(11, 40) },
-            { name: 'Lunch', start: makeHMTM(11, 40), end: makeHMTM(12, 10) },
-            { name: '6', start: makeHMTM(12, 20), end: makeHMTM(13, 40) },
-            { name: '7', start: makeHMTM(13, 50), end: makeHMTM(15, 5) }
+            { period: '5', start: makeHMTM(9, 40), end: makeHMTM(10, 55) },
+            { period: 'SELF', start: makeHMTM(11, 5), end: makeHMTM(11, 40) },
+            { period: 'Lunch', start: makeHMTM(11, 40), end: makeHMTM(12, 10) },
+            { period: '6', start: makeHMTM(12, 20), end: makeHMTM(13, 40) },
+            { period: '7', start: makeHMTM(13, 50), end: makeHMTM(15, 5) }
         ],
         null
     ];
@@ -63,5 +63,5 @@ function getGunnTogetherPeriod(date) {
 }
 
 function makeHMTM(hour, minute = 0) {
-    return { hour, minute, totalminutes: hour * 60 + minute }
+    return { hour, minute, totalMinutes: hour * 60 + minute }
 }
