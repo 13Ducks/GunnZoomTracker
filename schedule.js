@@ -59,7 +59,7 @@ function getGunnTogetherPeriod(date) {
         (date - new Date(2020, 8 - 1, 17)) / 1000 / 60 / 60 / 24 / 7
     )
     if (week === 0) return '5'
-    return '1234567'[(week + 3) % 7]
+    return '1234567'[(week + 2) % 7]
 }
 
 function makeHMTM(hour, minute = 0) {

@@ -2,6 +2,10 @@ body {
     min-width:300px;
 }
 
+h3 {
+    padding: 0;
+}
+
 #fullschedule, #ugwalink, .pbutton {
     cursor: pointer;
 }
