@@ -17,7 +17,7 @@ $(async function () {
         if (!config['apiKey']) throw "No API key!";
 
         const d = new Date();
-        const dt = d.toISOString().split("T")[0];
+        const dt = d.toLocaleString('sv').split(" ")[0];
         const schedule = new GunnSchedule(config['apiKey']);
         const year = schedule.year('2020-08-17', '2021-06-03', {
             normalSchedule: GunnSchedule.schedule2021,
@@ -69,7 +69,6 @@ $(async function () {
 
         daySchedule = normalSchedule[day];
     }
-
 
     const createItem = function (div, period) {
         const actualClass = allFields.includes("p" + period['period']);
