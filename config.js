@@ -1,4 +1,3 @@
 const config = {
-    // commented out so it knows it is undefined.
-    // apiKey: 'apikeygoeshere'
+    apiKey: 'AIzaSyANz6ZIe48aW_ZXSkr7zeAjkUMdSezSc7Q'
 }
