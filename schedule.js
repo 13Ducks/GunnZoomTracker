@@ -55,11 +55,15 @@ function generateSchedule(d) {
 }
 
 function getGunnTogetherPeriod(date) {
+    // second semester all gunn together periods are 5th
+    return "5";
+    /*
     const week = Math.floor(
         (date - new Date(2020, 8 - 1, 17)) / 1000 / 60 / 60 / 24 / 7
     )
     if (week === 0) return '5'
     return '1234567'[(week + 2) % 7]
+    */
 }
 
 function makeHMTM(hour, minute = 0) {
