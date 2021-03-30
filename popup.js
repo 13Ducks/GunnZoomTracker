@@ -59,9 +59,19 @@ $(async function () {
 
         daySchedule = periods;
     } catch (e) {
-        const now = Date.now();
-        const normalSchedule = generateSchedule(now);
-        const d = new Date();
+        const options = {
+            timeZone: 'America/Los_Angeles',
+            year: 'numeric',
+            month: 'numeric',
+            day: 'numeric',
+            hour: 'numeric',
+            minute: 'numeric',
+            second: 'numeric',
+        }
+
+        const formatter = new Intl.DateTimeFormat([], options);
+
+        const d = new Date(Date.parse(formatter.format(new Date())))
 
         const day = d.getDay();
 

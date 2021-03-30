@@ -3,7 +3,7 @@ Taken from https://github.com/Orbiit/gunn-web-app/blob/master/js/schedule.js
 */
 
 // Starts on Sunday
-function generateSchedule(d) {
+function generateSchedule() {
     return [
         null,
         [
