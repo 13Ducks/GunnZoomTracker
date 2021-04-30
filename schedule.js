@@ -26,10 +26,7 @@ function generateSchedule() {
         ],
         [
             { period: '5', start: makeHMTM(9, 40), end: makeHMTM(10, 55) },
-            {
-                period: getGunnTogetherPeriod(d), start: makeHMTM(11, 5),
-                end: makeHMTM(11, 40), gunnTogether: true
-            },
+            { period: 'SELF', start: makeHMTM(11, 5), end: makeHMTM(11, 40) },
             { period: 'Lunch', start: makeHMTM(11, 40), end: makeHMTM(12, 10) },
             { period: '6', start: makeHMTM(12, 20), end: makeHMTM(13, 40) },
             { period: '7', start: makeHMTM(13, 50), end: makeHMTM(15, 5) },
@@ -45,7 +42,10 @@ function generateSchedule() {
         ],
         [
             { period: '5', start: makeHMTM(9, 40), end: makeHMTM(10, 55) },
-            { period: 'SELF', start: makeHMTM(11, 5), end: makeHMTM(11, 40) },
+            {
+                period: getGunnTogetherPeriod(d), start: makeHMTM(11, 5),
+                end: makeHMTM(11, 40), gunnTogether: true
+            },
             { period: 'Lunch', start: makeHMTM(11, 40), end: makeHMTM(12, 10) },
             { period: '6', start: makeHMTM(12, 20), end: makeHMTM(13, 40) },
             { period: '7', start: makeHMTM(13, 50), end: makeHMTM(15, 5) }
