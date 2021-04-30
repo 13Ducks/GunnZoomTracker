@@ -12,8 +12,10 @@ $(async function () {
     $("#tabs").tabs();
 
     let daySchedule;
+    const normalSchedule = generateSchedule();
 
     try {
+        throw "Schedule API Is Broken"
         if (!config['apiKey']) throw "No API key!";
 
         const d = new Date();
@@ -45,7 +47,7 @@ $(async function () {
         for (let i = 0; i < periods.length; i++) {
             let curr = periods[i];
             if (curr['period'] == 'g') {
-                curr['period'] = getGunnTogetherPeriod(Date.now());
+                curr['period'] = getGunnTogetherPeriod();
                 curr['gunnTogether'] = true
             } else {
                 if (!Object.keys(newPeriodNames).includes(curr['period'])) {
@@ -155,7 +157,6 @@ $(async function () {
         let link = $(linkID).val();
 
         if (!link.startsWith("https://")) link = "https://" + link;
-
         browser.tabs.create({
             url: link
         });

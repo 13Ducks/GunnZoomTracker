@@ -43,7 +43,7 @@ function generateSchedule() {
         [
             { period: '5', start: makeHMTM(9, 40), end: makeHMTM(10, 55) },
             {
-                period: getGunnTogetherPeriod(d), start: makeHMTM(11, 5),
+                period: getGunnTogetherPeriod(), start: makeHMTM(11, 5),
                 end: makeHMTM(11, 40), gunnTogether: true
             },
             { period: 'Lunch', start: makeHMTM(11, 40), end: makeHMTM(12, 10) },
@@ -54,7 +54,7 @@ function generateSchedule() {
     ];
 }
 
-function getGunnTogetherPeriod(date) {
+function getGunnTogetherPeriod() {
     // second semester all gunn together periods are 5th
     return "5";
     /*
